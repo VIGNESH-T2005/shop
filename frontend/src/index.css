@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens. Shop-Zone is dark-only: deep plum ink, brass for action, orchid for light. */
+:root {
+  --bg: 14 12 22;
+  --surface: 24 21 36;
+  --raised: 34 30 50;
+  --line: 56 50 78;
+  --text: 238 234 246;
+  --muted: 160 152 182;
+  --brass: 242 184 75;
+  --orchid: 183 148 246;
+  --danger: 244 114 114;
+  --ok: 110 212 162;
+  color-scheme: dark;
+}
+html { background: rgb(var(--bg)); scroll-behavior: auto; }
+body { @apply bg-bg font-sans text-ink antialiased; font-size: 16px; line-height: 1.55; }
+h1, h2, h3, h4 { @apply font-display; letter-spacing: -0.02em; line-height: 1.08; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid rgb(var(--brass)); outline-offset: 3px; border-radius: 6px; }
+::selection { background: rgb(var(--orchid) / 0.4); }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-[transform,background-color,opacity] duration-200 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply btn bg-brass text-bg hover:bg-brass/90; }
+  .btn-ghost { @apply btn border border-line text-ink hover:bg-raised; }
+  .btn-danger { @apply btn border border-danger/40 text-danger hover:bg-danger/10; }
+  .input { @apply w-full rounded-xl border border-line bg-surface px-4 py-2.5 text-sm text-ink placeholder:text-muted/70 transition-colors focus:border-brass focus:outline-none; }
+  .input[aria-invalid='true'] { @apply border-danger; }
+  .card { @apply rounded-xl2 border border-line bg-surface; }
+  .chip { @apply inline-flex items-center rounded-full border border-line px-3 py-1 text-xs text-muted; }
+  .label { @apply mb-1.5 block text-sm font-medium text-ink; }
+  .field-error { @apply mt-1 text-xs text-danger; }
+  .container-x { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+}
+.skeleton { background: linear-gradient(100deg, rgb(var(--raised)) 30%, rgb(var(--line) / 0.7) 50%, rgb(var(--raised)) 70%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; border-radius: 0.75rem; }
+@keyframes shimmer { to { background-position-x: -200%; } }
+.sr-only-focusable:not(:focus) { @apply sr-only; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  .no-print { display: none !important; }
+  .print-sheet { border: none !important; background: #fff !important; color: #000 !important; }
+  .print-sheet * { color: #000 !important; border-color: #ccc !important; }
+}
